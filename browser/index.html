@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="be">
+
+<head>
+	<title id="pageTitle">Артаґрафічны Слоўнік Нашай Нівы</title>
+	<meta name="description"
+		content="Артаґрафічны слоўнік «Нашай Нівы» — адноўлены слоўнік клясычнай беларускай мовы (тарашкевіцы), складзены супрацоўнікамі Нашай Нівы на ґрунце матэрыялаў Уладзімера Каткоўскага. Зручны пошук па словах, формах і варыянтах.">
+	<meta name="keywords"
+		content="беларускі слоўнік, тарашкевіца, клясычны правапіс, артаґрафія, Наша Ніва, слоўнік онлайн, пошук словаў, беларуская мова">
+	<meta name="author" content="Наша Ніва, Уладзімер Каткоўскі">
+	<meta name="robots" content="index, follow">
+
+	<!-- Open Graph -->
+	<meta property="og:title" content="Артаґрафічны слоўнік «Нашай Нівы»">
+	<meta property="og:description"
+		content="Адноўлены слоўнік клясычнай беларускай мовы (тарашкевіцы) Нашай Нівы з магчымасьцю хуткага пошуку й навіґацыі па словах.">
+	<meta property="og:type" content="website">
+	<meta property="og:locale" content="be_BY">
+	<meta property="og:url" content="https://your-domain.com/">
+	<meta property="og:image" content="https://s.nashaniva.com/main/img/logo/desktop-logo-plain.svg?v=3">
+	<!-- Twitter (optional but good practice) -->
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:title" content="Артаґрафічны слоўнік «Нашай Нівы»">
+	<meta name="twitter:description" content="Адноўлены слоўнік клясычнай беларускай мовы (тарашкевіцы) Нашай Нівы.">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="UTF-8">
+	<link rel="canonical" href="https://your-domain.com/">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&family=Ubuntu+Sans:ital,wght@0,100..800;1,100..800&display=swap"
+		rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+	<style>
+		body {
+			font-family: "Ubuntu Sans", sans-serif;
+		}
+
+		input[type="text"] {
+			width: 300px;
+			padding: 0.3em;
+		}
+
+		.search-container i {
+			top: 50%;
+			transform: translateY(-50%);
+		}
+
+		.spectral {
+			font-family: "Spectral", serif;
+			font-optical-sizing: auto;
+			font-weight: 700;
+			font-style: normal;
+		}
+	</style>
+</head>
+
+<body class="bg-danger">
+	<!-- Navbar -->
+	<div class="bg-white">
+		<div class="container">
+			<header class="d-flex flex-wrap align-items-center justify-content-center justify-content-between py-3">
+				<!-- Links -->
+				<div class="col-md-3 mb-2 mb-md-0 d-flex align-items-center gap-3">
+					<a href="https://github.com/andreihar/nasa-niva-dict" target="_blank"
+						class="d-inline-flex link-body-emphasis text-decoration-none" title="GitHub">
+						<i class="fab fa-github fa-2x"></i>
+					</a>
+					<a href="https://nashaniva.com/" target="_blank"
+						class="d-inline-flex link-body-emphasis text-decoration-none" title="Наша Ніва">
+						<img src="https://yt3.googleusercontent.com/KyvyD9RvvFh8qHQhIhKCLEj0GRWyMT-HoO40c4JPOLfp8z1dfzZc3TDJQZR4mh31QjO3enGpeX8=s900-c-k-c0x00ffffff-no-rj"
+							alt="Наша Ніва" style="width:32px;height:32px;border-radius:6px;">
+					</a>
+				</div>
+				<!-- Title -->
+				<div class="col-md-6 text-center">
+					<span id="title" data-l10n="title" class="fs-3 fw-bold text-danger d-none d-md-block"></span>
+				</div>
+				<!-- Language toggle -->
+				<div class="col-md-3 text-end">
+					<button id="langToggle" data-l10n="langToggle"
+						class="btn btn-danger rounded-pill mr-md-3 mb-md-0 mb-2">Бел</button>
+				</div>
+			</header>
+		</div>
+	</div>
+
+	<p style="display: none;">
+		<input type="file" id="csvFile" accept=".csv">
+	</p>
+
+	<!-- Header -->
+	<div class="text-white text-center py-4 mb-4">
+		<div class="container d-flex align-items-center justify-content-center" style="min-height: 200px;">
+			<div class="mx-auto" style="max-width: 500px;">
+				<div class="d-flex align-items-center bg-white rounded-pill shadow px-3 py-2 mb-2">
+					<i class="fas fa-search text-secondary position-absolute ms-2"></i>
+					<input id="searchBox" class="form-control border-0 bg-transparent ps-5" type="search" placeholder=""
+						data-l10n-placeholder="searchPlaceholder" aria-label="Search">
+					<button id="searchBtn" class="btn btn-danger rounded-pill ms-2 px-3"
+						data-l10n="searchBtn">Search</button>
+				</div>
+				<div class="gap-4 fs-5">
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" id="ggToggle">
+						<label class="form-check-label" for="ggToggle">
+							<span id="ggLabel" data-l10n="ggLabel"></span>
+						</label>
+					</div>
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" id="substrToggle">
+						<label class="form-check-label" for="substrToggle">
+							<span id="substrLabel" data-l10n="substrLabel"></span>
+						</label>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Main Content -->
+	<main class="bg-light rounded-5">
+		<div class="container py-5">
+			<div id="alphabetButtons" style="margin-bottom:1em;"></div>
+			<div id="tableContainer"></div>
+			<div class="d-flex justify-content-center">
+				<div id="pagination" class="d-flex align-items-center" style="margin-top:1em;"></div>
+			</div>
+		</div>
+	</main>
+
+	<!-- Footer -->
+	<footer class="text-center text-white">
+		<div class="container pt-5 fs-5">
+			<section class="mb-5">
+				<div class="row d-flex justify-content-center">
+					<div class="col-lg-8">
+						<span data-l10n="footer">Гэты сайт — адноўленая электронная вэрсія артаґрафічнага слоўніка
+							«Нашае Нівы», які шырока выкарыстоўваўся на прасторах інтэрнэту, але быў згублены. Слоўнік
+							рэканструяваны на ґрунце файлаў, укладзеных Уладзімерам Каткоўскім, і адлюстроўвае нормы
+							клясычнае беларускае артаґрафіі (тарашкевіцы).</span>
+					</div>
+				</div>
+			</section>
+			<section class="text-center mb-5">
+				<a href="https://github.com/andreihar/nasa-niva-dict" target="_blank" class="text-white" title="GitHub">
+					<i class="fab fa-github fa-2x transition-all"></i>
+				</a>
+			</section>
+		</div>
+		<div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+			2001
+		</div>
+	</footer>
+</body>
+<script src="l10n.js"></script>
+<script src="script.js"></script>
+<script>
+	// Allow Enter key in search box to trigger search
+	document.getElementById('searchBox').addEventListener('keydown', function (e) {
+		if (e.key === 'Enter') {
+			document.getElementById('searchBtn').click();
+		}
+	});
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Артаґрафічны слоўнік «Нашай Нівы»",
+  "url": "https://your-domain.com/",
+  "inLanguage": "be",
+  "description": "Адноўлены слоўнік клясычнага беларускага правапіса (тарашкевіцы).",
+  "creator": {
+    "@type": "Person",
+    "name": "Уладзімер Каткоўскі"
+  }
+}
+</script>
+
+</html>
