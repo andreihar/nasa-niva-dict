@@ -40,19 +40,15 @@ var l10n = {
 			'<i>мін.</i>': 'мінэрал',
 			'<i>н.</i>': 'ніякі род',
 			'<i>незак.</i>': 'незакончаны від',
-			'<i>нязьм., ж.</i>': 'нязьменнае, жаночы род',
-			'<i>нязьм., м. і ж.</i>': 'нязьменнае, мужчынскі і жаночы род',
-			'<i>нязьм., м.</i>': 'нязьменнае, мужчынскі род',
-			'<i>нязьм., н. і м.</i>': 'нязьменнае, ніякі і мужчынскі род',
-			'<i>нязьм., н.</i>': 'нязьменнае, ніякі род',
-			'<i>нязьм., прав.</i>': 'нязьменнае, праваслаўнае',
+			'<i>н. і м.</i>': 'ніякі і мужчынскі род',
 			'<i>нязьм.</i>': 'нязьменнае',
 			'<i>параўн. прым.</i>': 'параўнальны прыметнік',
 			'<i>параўн.</i>': 'параўнальны',
 			'<i>прав.</i>': 'праваслаўнае',
 			'<i>прыназ.</i>': 'прыназоўнік',
 			'<i>прысл.</i>': 'прыслоўе',
-			'<i>рэліґ., мус.</i>': 'рэліґійнае, мусульманскае',
+			'<i>рэліґ.</i>': 'рэліґійнае',
+			'<i>мус.</i>': 'мусульманскае',
 			'<i>с.-г.</i>': 'сельскагаспадарчае',
 			'<i>фарм.</i>': 'фармакалёґія',
 			'<i>эм.</i>': 'эміґрацыйнае',
@@ -101,19 +97,15 @@ var l10n = {
 			'<i>мін.</i>': 'mineral',
 			'<i>н.</i>': 'neuter',
 			'<i>незак.</i>': 'imperfective',
-			'<i>нязьм., ж.</i>': 'indeclinable, feminine',
-			'<i>нязьм., м. і ж.</i>': 'indeclinable, masculine and feminine',
-			'<i>нязьм., м.</i>': 'indeclinable, masculine',
-			'<i>нязьм., н. і м.</i>': 'indeclinable, neuter and masculine',
-			'<i>нязьм., н.</i>': 'indeclinable, neuter',
-			'<i>нязьм., прав.</i>': 'indeclinable, Orthodox',
+			'<i>н. і м.</i>': 'neuter and masculine',
 			'<i>нязьм.</i>': 'indeclinable',
 			'<i>параўн. прым.</i>': 'comparative adjective',
 			'<i>параўн.</i>': 'comparative',
 			'<i>прав.</i>': 'Orthodox',
 			'<i>прыназ.</i>': 'preposition',
 			'<i>прысл.</i>': 'adverb',
-			'<i>рэліґ., мус.</i>': 'religious, Muslim',
+			'<i>рэліґ.</i>': 'religious',
+			'<i>мус.</i>': 'Muslim',
 			'<i>с.-г.</i>': 'agricultural',
 			'<i>фарм.</i>': 'pharmacology',
 			'<i>эм.</i>': 'emigré',
@@ -210,8 +202,12 @@ function renderEntryBlock(row) {
 				<div class="d-flex align-items-baseline gap-2">
 					${row[0] ? `<span class="fw-bold fs-3 text-danger spectral">${row[0]}</span>` : ''}
 					${row[2] ? (() => {
-			let expl = L.classification[row[2]] || '';
-			return `<u class=\"text-danger fst-italic\" title=\"${expl}\">${row[2]}</u>`;
+			// Split by comma, trim, and render each with its own tooltip
+			return row[2].split(',').map(item => {
+				let trimmed = item.trim();
+				let expl = L.classification[trimmed] || '';
+				return `<u class="text-danger fst-italic" title="${expl}">${trimmed}</u>`;
+			}).join(', ');
 		})() : ''}
 				</div>
 				${row[1] ? `<div><span class="fst-italic text-dark">(${row[1]})</span></div>` : ''}
