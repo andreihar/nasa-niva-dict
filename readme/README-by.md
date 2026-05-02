@@ -67,7 +67,7 @@
 <!-- ABOUT THE PROJECT -->
 ## Пра праект
 
-Гэты праект ёсьць рэканструкцыю *Слоўніка беларускай мовы* — артаґрафічнага слоўніка беларускае мовы ў яе [клясычным правапісе (Тарашкевіцы)][taraskіevіca-wіkі], першапачаткова падрыхтаванага рэдакцыяю «Нашае Нівы» ў 2001 року. Слоўнік калісьці быў даступны ў інтэрнэце праз slounіk.org і шырока ўжываўся, але пасьля яго выдаленьня доступ стаў цяжкадаступным і паступова зьнік з агульнага ўжытку.
+Гэты праект ёсьць рэканструкцыяю *Слоўніка беларускай мовы* — артаґрафічнага слоўніка беларускае мовы ў яе [клясычным правапісе (Тарашкевіцы)][taraskіevіca-wіkі], першапачаткова падрыхтаванага рэдакцыяю «Нашае Нівы» ў 2001 року. Слоўнік калісьці быў даступны ў інтэрнэце праз slounіk.org і шырока ўжываўся, але пасьля яго выдаленьня доступ стаў цяжкадаступным і паступова зьнік з агульнага ўжытку.
 
 Гэтая вэрсія заснаваная на адноўленым CHM файле, сабраным Уладзімерам Каткоўскім зь некалькіх крыніцаў RTF. Зьвесткі былі пераўтвораныя ў структураваны фармат CSV і прадстаўленыя ў выглядзе сучаснае вэб-прылады, захоўваючы арыґінальны зьмест і забясьпечваючы хуткі пошук, фільтраваньне ды навіґацыю. Праект служыць як практычным лінґвістычным інструмэнтам, так і лічбавым захаваньнем важнага рэсурсу для вывучэньня ды ўжываньня клясычнага беларускага правапісу.
 
@@ -172,10 +172,10 @@ $ python -m http.server 8000
 
 <!-- MARKDOWN LINKS -->
 <!-- Badges and their links -->
-[contributors-badge]: https://img.shields.io/badge/Contributors-1-44cc11?style=for-the-badge
+[contributors-badge]: https://img.shields.io/badge/Contributors-1-44cc11?style=for-the-badge&label=Саўдзельнікі
 [contributors]: #contributors
-[licence-badge]: https://img.shields.io/github/license/andreihar/nasa-niva-dict.svg?color=000000&style=for-the-badge
-[licence]: LICENSE
+[licence-badge]: https://img.shields.io/github/license/andreihar/nasa-niva-dict.svg?color=000000&style=for-the-badge&label=Ліцэнзія
+[licence]: LICENCE
 [linkedin-badge]: https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white
 [linkedin]: https://www.linkedin.com/in/andrei-harbachov/
 

@@ -67,7 +67,7 @@ A reconstructed Belarusian orthographic dictionary preserving classical Belarusi
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-This project is a reconstruction of the *Dictionary of the Belarusian Language* — an orthographic dictionary of the Belarusian language in its [classical spelling (Taraškievica)][taraskievica-wiki], originally prepared by the editorial team of «Naša Niva» in 2001. The dictionary was once available online via slounik.org and saw widespread use, but after its removal it became difficult to access and gradually disappeared from common use.
+This project is a reconstruction of the *Dictionary of the Belarusian Language* — an orthographic dictionary of the Belarusian language in its [classical spelling (Taraškievica)][taraskievica-wiki], originally prepared by the editorial team of «Naša Niva» in 2001. The dictionary was once available online via slounik.org and saw widespread use, but after its removal, it became difficult to access and gradually disappeared from common use.
 
 This version is based on a recovered CHM file, assembled by Uładzimier Katkoŭski from multiple RTF sources. The data has been converted into a structured CSV format and presented as a modern web application, preserving the original content while providing fast search, filtering, and navigation. The project serves both as a practical linguistic tool and as a digital preservation of an important resource for the study and use of classical Belarusian orthography.
 
