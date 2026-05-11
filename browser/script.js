@@ -464,6 +464,21 @@ function updateFilter() {
 
 document.getElementById('searchBtn').addEventListener('click', function () {
 	currentAlpha = '';
+	// Blur the search box to close the mobile keyboard
+	document.getElementById('searchBox').blur();
+	// Update URL with ?search= param
+	const val = document.getElementById('searchBox').value;
+	if (history.replaceState) {
+		const url = new URL(window.location);
+		if (val) {
+			url.searchParams.set('search', encodeURIComponent(val));
+		} else {
+			url.searchParams.delete('search');
+		}
+		// Use encodeURI to keep Cyrillic readable
+		let urlStr = url.origin + url.pathname + (url.search ? '?' + url.searchParams.toString() : '');
+		history.replaceState(null, '', encodeURI(urlStr));
+	}
 	updateFilter();
 });
 document.getElementById('ggToggle').addEventListener('change', updateFilter);
@@ -480,6 +495,21 @@ document.getElementById('alphabetButtons').addEventListener('click', function (e
 // --- Auto-load dict.csv if present ---
 window.addEventListener('DOMContentLoaded', function () {
 	setLocale('be');
+	// If ?search= param is present, prefill and search
+	const params = new URLSearchParams(window.location.search);
+	let searchVal = params.get('search');
+	if (searchVal) {
+		// Decode once
+		try {
+			let decoded = decodeURIComponent(searchVal);
+			// If still looks like %XX, decode again
+			if (/^%[0-9A-Fa-f]{2}/.test(decoded)) {
+				decoded = decodeURIComponent(decoded);
+			}
+			searchVal = decoded;
+		} catch (e) { }
+		document.getElementById('searchBox').value = searchVal;
+	}
 	fetch('dict.csv').then(resp => {
 		if (!resp.ok) throw new Error('No dict.csv');
 		return resp.text();
@@ -487,7 +517,12 @@ window.addEventListener('DOMContentLoaded', function () {
 		allRows = parseCSV(text);
 		filteredRows = allRows;
 		currentPage = 1;
-		renderTablePage(currentPage);
+		// If search param present, trigger filter
+		if (searchVal) {
+			updateFilter();
+		} else {
+			renderTablePage(currentPage);
+		}
 	}).catch(() => { });
 });
 
