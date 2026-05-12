@@ -378,6 +378,24 @@ function renderPagination(page) {
 
 window.gotoPage = function (page) {
 	currentPage = page;
+	// Update URL with ?page= param and preserve search param (without double-encoding)
+	if (history.replaceState) {
+		const url = new URL(window.location);
+		// Get the current search value from the input (decoded)
+		const searchBoxVal = document.getElementById('searchBox').value;
+		if (searchBoxVal) {
+			url.searchParams.set('search', encodeURIComponent(searchBoxVal));
+		} else {
+			url.searchParams.delete('search');
+		}
+		if (currentPage > 1) {
+			url.searchParams.set('page', encodeURIComponent(currentPage));
+		} else {
+			url.searchParams.delete('page');
+		}
+		let urlStr = url.origin + url.pathname + (url.search ? '?' + url.searchParams.toString() : '');
+		history.replaceState(null, '', encodeURI(urlStr));
+	}
 	renderTablePage(currentPage);
 };
 
@@ -457,8 +475,12 @@ function updateFilter() {
 	const filter = document.getElementById('searchBox').value;
 	const ignoreGG = document.getElementById('ggToggle').checked;
 	const substrMatch = document.getElementById('substrToggle').checked;
+	// Accept skipPageReset argument (default false)
+	const skipPageReset = arguments.length > 0 && arguments[0] === true;
 	filteredRows = filterRows(filter, ignoreGG, substrMatch, currentAlpha);
-	currentPage = 1;
+	if (!skipPageReset) {
+		currentPage = 1;
+	}
 	renderTablePage(currentPage);
 }
 
@@ -495,7 +517,7 @@ document.getElementById('alphabetButtons').addEventListener('click', function (e
 // --- Auto-load dict.csv if present ---
 window.addEventListener('DOMContentLoaded', function () {
 	setLocale('be');
-	// If ?search= param is present, prefill and search
+	// If ?search= or ?page= param is present, prefill and search
 	const params = new URLSearchParams(window.location.search);
 	let searchVal = params.get('search');
 	if (searchVal) {
@@ -510,16 +532,35 @@ window.addEventListener('DOMContentLoaded', function () {
 		} catch (e) { }
 		document.getElementById('searchBox').value = searchVal;
 	}
+	// Handle ?page= param with double-decode logic
+	let pageVal = params.get('page');
+	if (pageVal) {
+		try {
+			let decoded = decodeURIComponent(pageVal);
+			if (/^%[0-9A-Fa-f]{2}/.test(decoded)) {
+				decoded = decodeURIComponent(decoded);
+			}
+			pageVal = decoded;
+		} catch (e) { }
+		// Only set currentPage if it's a valid positive integer
+		let pageNum = parseInt(pageVal, 10);
+		if (!isNaN(pageNum) && pageNum > 0) {
+			currentPage = pageNum;
+		}
+	}
 	fetch('dict.csv').then(resp => {
 		if (!resp.ok) throw new Error('No dict.csv');
 		return resp.text();
 	}).then(text => {
 		allRows = parseCSV(text);
 		filteredRows = allRows;
-		currentPage = 1;
+		// Only reset to page 1 if neither search nor page param is present
+		if (!searchVal && !pageVal) {
+			currentPage = 1;
+		}
 		// If search param present, trigger filter
 		if (searchVal) {
-			updateFilter();
+			updateFilter(true); // Don't reset page if restoring from URL
 		} else {
 			renderTablePage(currentPage);
 		}
